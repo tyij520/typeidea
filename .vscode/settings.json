@@ -1,0 +1,10 @@
+{
+    // "python.pythonPath": "D:\\ProgramData\\Anaconda3\\python.exe"
+    
+    "python.pythonPath": "E:\\project\\Django\\typeidea-env\\Scripts\\python.exe",
+    "editor.fontSize": 15,
+    "editor.fontFamily": "YaHei Consolas Hybrid",
+    "cSpell.ignoreWords": [
+        "typeidea"
+    ]
+}
