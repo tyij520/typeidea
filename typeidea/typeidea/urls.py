@@ -1,3 +1,12 @@
+"""  
+@Author: your name
+@Date: 2020-03-23 14:51:44
+@LastEditTime: 2020-03-26 16:37:11
+@LastEditors: Please set LastEditors
+@Description: In User Settings Edit
+@FilePath: typeidea-typeidea-typeidea-urls.py
+"""
+
 from django.conf.urls import url
 from django.contrib import admin
 
@@ -8,11 +17,11 @@ from .custom_site import custom_site
 
 
 urlpatterns = [
-    url(r'^$', post_list, name='post_list'),
-    url(r'^category/(?P<category_id>\d+)/$', post_list, name='category_list'),
-    url(r'^tag/(?P<tag_id>\d+)/$', post_list, name='tag_list'),
-    url(r'^post/(?P<post_id>\d+).html$', post_detail, name='post_detail'),
+    url(r'^$', post_list, name='index'),
+    url(r'^category/(?P<category_id>\d+)/$', post_list, name='category-list'),
+    url(r'^tag/(?P<tag_id>\d+)/$', post_list, name='tag-list'),
+    url(r'^post/(?P<post_id>\d+).html$', post_detail, name='post-detail'),
     url(r'^links/$', links, name='links'),
-    url(r'^super_admin/', admin.site.urls),
-    url(r'^admin/', custom_site.urls),  # 配置自定义站点
+    url(r'^super_admin/', admin.site.urls, name='super-admin'),
+    url(r'^admin/', custom_site.urls, name='admin'),  # 配置自定义站点
 ]

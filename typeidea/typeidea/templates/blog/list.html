@@ -1,61 +1,29 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>typeidea博客系统</title>
-    </head>
+{% extends "./base.html" %}
 
-    <body>
-        <div>顶部分类：
-            {% for cate in navs %}
-            <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
-            {% endfor %}
+
+{% block title %}
+    {% if tag %}
+    标签页：{{ tag.name }}
+    {% elif category %}
+    分类页：{{ category.name }}
+    {% else %}
+    首页
+    {% endif %}
+{% endblock %}
+
+
+{% block main %}
+    <h1>文章列表</h1>
+    <ul>
+    {% for post in post_list %}
+    <li>
+        <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+        <div>
+            <span>作者： {{ post.owner.username }}</span>
+            <span>分类： {{ post.category.name }}</span>
         </div>
-        <hr/>
-
-        {% if tag %}
-        <h1>标签页： {{ tag.name }}</h1>
-        {% endif %}
-
-        {% if category %}
-        <h1>分类页： {{ category.name }}</h1>
-        {% endif %}
-
-        <h1>文章列表</h1>
-        <ul>
-        {% for post in post_list %}
-        <li>
-            <a href="/post/{{ post.id }}.html">{{ post.title }}</a>
-            <div>
-                <span>作者： {{ post.owner.username }}</span>
-                <span>分类： {{ post.category.name }}</span>
-            </div>
-            <p>{{ post.desc }}</p>
-        </li>
-        {% endfor %}
-        </ul>
-
-        <hr/>
-        <div>底部分类：
-            {% for cate in categories %}
-            <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
-            {% endfor %}
-        </div>
-
-
-        <hr/>
-        <div>侧边栏展示：
-            {% for sidebar in sidebars %}
-                <h4>{{ sidebar.title }}</h4>
-                {{ sidebar.content_html }}
-            {% endfor %}
-        </div>
-        
-    </body>
-</html>
-
-
-
-
-
-
+        <p>{{ post.desc }}</p>
+    </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

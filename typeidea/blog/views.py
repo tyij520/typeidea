@@ -1,7 +1,7 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 23:56:58
-@LastEditTime: 2020-03-26 14:33:11
+@LastEditTime: 2020-03-26 16:11:23
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \typeidea\typeidea\blog\views.py
@@ -60,6 +60,6 @@ def post_detail(request, post_id):
     }
     context.update(Category.get_navs())
 
-    return render(request, 'blog/detail.html', context={'post': post})
+    return render(request, 'blog/detail.html', context=context)
 
 
