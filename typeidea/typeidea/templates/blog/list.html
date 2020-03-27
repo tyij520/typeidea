@@ -1,11 +1,19 @@
+<!--
+ * @Author: Tye
+ * @Date: 2020-03-25 14:59:01
+ * @LastEditTime: 2020-03-27 09:52:21
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \typeidea\typeidea\typeidea\templates\blog\list.html
+ -->
 {% extends "./base.html" %}
 
 
 {% block title %}
     {% if tag %}
-    标签页：{{ tag.name }}
+    标签列表页：{{ tag.name }}
     {% elif category %}
-    分类页：{{ category.name }}
+    分类列表页：{{ category.name }}
     {% else %}
     首页
     {% endif %}
@@ -13,6 +21,7 @@
 
 
 {% block main %}
+    <!-- 文章列表 -->
     <h1>文章列表</h1>
     <ul>
     {% for post in post_list %}
@@ -26,4 +35,17 @@
     </li>
     {% endfor %}
     </ul>
+
+    <!-- 分页 -->
+    {% if page_obj %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+        {% endif %}
+    {% endif %}
 {% endblock %}
