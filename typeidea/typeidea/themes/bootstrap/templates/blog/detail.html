@@ -1,0 +1,33 @@
+<!--
+ * @Author: Tye
+ * @Date: 2020-03-27 11:02:40
+ * @LastEditTime: 2020-04-01 20:30:11
+ * @Description: add bootstrap
+ -->
+{% extends "./base.html" %}
+
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+
+{% block main %}
+    {% if post %}
+        <div class="card post">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
+                <span class="card-link">作者：<a href="{% url 'author-list' post.owner.id %}">{{ post.owner.username }}</a></span>
+                <span class="card-link">分类：<a href="{% url 'category-list' post.category.id %}">{{ post.category.name }}</a></span>
+                <span class="card-link">标签：
+                    {% for tag in post.tag.all %}
+                    <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
+                    {% endfor %}
+                </span>
+                <hr/>
+                <hr/>
+                <p class="card-text">{{ post.content }}</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,10 +1,8 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 23:56:58
-@LastEditTime: 2020-03-26 22:45:17
-@LastEditors: Please set LastEditors
-@Description: In User Settings Edit
-@FilePath: \typeidea\typeidea\blog\views.py
+@LastEditTime: 2020-04-01 20:24:58
+@Description: 
 '''
 
 from django.shortcuts import render
@@ -16,6 +14,8 @@ from django.views.generic import ListView, DetailView   # 导入类视图
 from .models import Post, Category, Tag
 from config.models import SideBar
 
+from django.db.models import Q      # 用于搜索列表页，优化查询
+
 
 # Create your views here.
 # class-base-view实现方式
@@ -26,6 +26,7 @@ class CommonViewMixin:
         context.update(
             {
                 'sidebars': SideBar.get_all(),
+                'keyword': '',  # 此处添加keyword，解决VariableDoesNotExist报错 
             }
         )
         context.update(Category.get_navs())
@@ -55,7 +56,7 @@ class CategoryView(IndexView):
         """ 重写get_context_data方法，添加分类信息"""
         context = super().get_context_data(**kwargs)
         category_id = self.kwargs.get('category_id')            # 获取url传递的参数值
-        category = get_object_or_404(Category, pk=category_id)  # 判断分类ID1是否存在，不存在返回404
+        category = get_object_or_404(Category, pk=category_id)  # 判断分类ID是否存在，不存在返回404
         context.update({
             'category': category,
         })
@@ -88,6 +89,43 @@ class TagView(IndexView):
         queryset = super().get_queryset()
         tag_id = self.kwargs.get('tag_id')
         return queryset.filter(tag__id=tag_id)
+
+
+
+# 搜索列表页（继承首页类）
+class SearchView(IndexView):
+    def get_context_data(self):
+        """ 添加用户搜索的关键字 """
+        context = super().get_context_data()
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')  # 获取用户提交的keyword，没有就返回空
+        })
+        return context
+    
+    
+    def get_queryset(self):
+        """ 根据关键字过滤 """
+        queryset = super().get_queryset()
+        keyword = self.request.GET.get('keyword')
+        if not keyword:
+            return queryset
+        return queryset.filter(Q(title__icontains=keyword) | Q(desc__icontains=keyword))
+
+
+
+
+
+
+# 作者列表页（继承首页类）
+class AuthorView(IndexView):
+    def get_queryset(self):
+        """ 根据作者id过滤 """
+        queryset = super().get_queryset()
+        author_id = self.kwargs.get('owner_id')
+        return queryset.filter(owner_id=author_id)
+
+
+
 
 
 

@@ -1,0 +1,57 @@
+<!--
+ * @Author: Tye
+ * @Date: 2020-03-25 14:59:01
+ * @LastEditTime: 2020-04-01 20:22:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \typeidea\typeidea\typeidea\templates\blog\list.html
+ -->
+{% extends "./base.html" %}
+
+
+{% block title %}
+    {% if tag %}
+    标签页：{{ tag.name }}
+    {% elif category %}
+    分类页：{{ category.name }}
+    {% else %}
+    首页
+    {% endif %}
+{% endblock %}
+
+
+{% block main %}
+    <!-- 文章列表 -->
+    {% for post in post_list %}
+    <div class="card post">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
+            <span class="card-link">作者：<a href="{% url 'author-list' post.owner.id %}">{{ post.owner.username }}</a></span>
+            <span class="card-link">分类：<a href="{% url 'category-list' post.category.id %}">{{ post.category.name }}</a></span>
+            <span class="card-link">标签：
+                {% for tag in post.tag.all %}
+                <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
+                {% endfor %}
+            </span>
+            <hr/>
+            <p class="card-text">{{ post.desc }}
+                <a href="{% url 'post-detail' post.id %}">完整内容</a>
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- 分页 -->
+    {% if page_obj %}
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}
