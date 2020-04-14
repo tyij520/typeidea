@@ -1,7 +1,7 @@
 <!--
  * @Author: Tye
  * @Date: 2020-03-27 11:02:40
- * @LastEditTime: 2020-04-14 16:29:55
+ * @LastEditTime: 2020-04-14 18:40:25
  * @Description: add bootstrap
  -->
 {% extends "./base.html" %}
@@ -29,7 +29,7 @@
                 </span>
                 <hr/>
                 <hr/>
-                <p class="card-text">{{ post.content }}</p>
+                <p class="card-text">{% autoescape off %}{{ post.content_html }} {% endautoescape %}</p>
             </div>
         </div>
     {% endif %}

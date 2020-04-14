@@ -1,12 +1,14 @@
 '''
 @Author: Tye
 @Date: 2020-04-03 13:41:21
-@LastEditTime: 2020-04-03 14:06:23
+@LastEditTime: 2020-04-14 17:29:43
 @Description: comments used Model.Form
 '''
 from django import forms
 
 from.models import Comment
+
+import mistune      # 引入markdown三方库
 
 
 # 评论需要用到的Form表单模型
@@ -54,6 +56,7 @@ class CommentForm(forms.ModelForm):
         # 判断评论内容，如果内容太少，直接抛出异常
         if len(content) < 10:
             raise forms.ValidationError('内容长度怎么能这么短呢！!')
+        content = mistune.markdown(content)
         return content
 
 

@@ -1,13 +1,15 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 15:55:32
-@LastEditTime: 2020-03-26 14:46:25
+@LastEditTime: 2020-04-14 18:41:27
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \typeidea\typeidea\blog\models.py
 '''
 from django.db import models
 from django.contrib.auth.models import User
+
+import mistune      # 引入markdown三方库
 
 # Create your models here.
 # """ 分类模型"""
@@ -86,7 +88,8 @@ class Post(models.Model):
 
     title = models.CharField(max_length=255, verbose_name="标题")
     desc =models.CharField(max_length=1024, blank=True, verbose_name="摘要")
-    content = models.TextField(verbose_name="正文", help_text="正文必须为MarkDown格式！")
+    content = models.TextField(verbose_name="正文", help_text="正文必须为MarkDown格式！") 
+    content_html = models.TextField(verbose_name="正文html代码", blank=True, editable=False)    # 增加content_html字段用于保存html格式的正文内容
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS, verbose_name="状态")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="分类")
     tag = models.ManyToManyField(Tag, verbose_name="标签")
@@ -141,6 +144,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    # 重写save方法，保存content_html
+    def save(self, *args, **kwargs):
+        self.content_html = mistune.markdown(self.content)
+        super().save(*args, **kwargs)
 
 
     class Meta:
