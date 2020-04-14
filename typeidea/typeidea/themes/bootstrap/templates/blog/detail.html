@@ -1,11 +1,13 @@
 <!--
  * @Author: Tye
  * @Date: 2020-03-27 11:02:40
- * @LastEditTime: 2020-04-01 20:30:11
+ * @LastEditTime: 2020-04-14 16:29:55
  * @Description: add bootstrap
  -->
 {% extends "./base.html" %}
 
+<!-- 加载自定义的标签文件 -->
+{% load comment_block %}    
 
 {% block title %}
     {{ post.title }}
@@ -13,6 +15,7 @@
 
 
 {% block main %}
+    <!-- 文章展示 -->
     {% if post %}
         <div class="card post">
             <div class="card-body">
@@ -30,4 +33,8 @@
             </div>
         </div>
     {% endif %}
+
+    <hr />
+    {% comment_block request.path %} 
+
 {% endblock %}

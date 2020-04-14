@@ -1,7 +1,7 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 23:56:58
-@LastEditTime: 2020-04-01 20:24:58
+@LastEditTime: 2020-04-14 16:20:12
 @Description: 
 '''
 
@@ -15,6 +15,9 @@ from .models import Post, Category, Tag
 from config.models import SideBar
 
 from django.db.models import Q      # 用于搜索列表页，优化查询
+
+from comment.forms import CommentForm   # 引入评论模型
+from comment.models import Comment
 
 
 # Create your views here.
@@ -144,6 +147,14 @@ class PostDetailView(CommonViewMixin, DetailView):
     pk_url_kwarg = 'post_id'
 
 
+    # 重写返回内容方法，增加评论表单和评论列表信息
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data()
+    #     context.update({
+    #         'comment_form': CommentForm,
+    #         'comment_list': Comment.get_by_target(self.request.path),
+    #     })
+    #     return context
 
 
 

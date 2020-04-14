@@ -1,7 +1,14 @@
+<!--
+ * @Author: Tye
+ * @Date: 2020-04-01 20:46:46
+ * @LastEditTime: 2020-04-14 16:35:49
+ * @Description: 
+ -->
+ 
 <ul>
 {% for comment in comments %}
 <li>
-    <a href="{% url 'post-detail' comment.target_id %}">{{ comment.target.title }}</a> | 
+    <a href="{{ comment.target }}">{{ comment.target.title }}</a> |
     {{ comment.nickname }} : {{ comment.content }}
 </li>
 {% endfor %}

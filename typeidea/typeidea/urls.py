@@ -1,7 +1,7 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 14:51:44
-@LastEditTime: 2020-04-02 14:43:32
+@LastEditTime: 2020-04-03 15:14:45
 @Description: 
 '''
 
@@ -14,6 +14,8 @@ from blog.views import (
 from config.views import LinkListView
 from .custom_site import custom_site
 
+from comment.views import CommentView
+
 
 
 urlpatterns = [
@@ -24,6 +26,7 @@ urlpatterns = [
     url(r'^links/$', LinkListView.as_view(), name='links'),
     url(r'^search/$', SearchView.as_view(), name='search'),
     url(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post-detail'),
+    url(r'^comment/$', CommentView.as_view(), name='comment'),
     url(r'^super_admin/', admin.site.urls, name='super-admin'),
     url(r'^admin/', custom_site.urls, name='admin'),  # 配置自定义站点
 ]

@@ -1,7 +1,7 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 23:56:58
-@LastEditTime: 2020-03-25 11:20:29
+@LastEditTime: 2020-04-03 16:12:36
 @LastEditors: Please set LastEditors
 @Description: config admin
 @FilePath: \typeidea\typeidea\blog\admin.py

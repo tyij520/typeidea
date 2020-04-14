@@ -1,10 +1,13 @@
 <!--
  * @Author: Tye
  * @Date: 2020-04-02 14:27:35
- * @LastEditTime: 2020-04-02 14:50:47
+ * @LastEditTime: 2020-04-14 16:34:22
  * @Description: 
  -->
 {% extends "blog/base.html" %}
+
+<!-- 加载自定义的标签文件 -->
+{% load comment_block %}
 
 {% block title %}
 友情链接
@@ -31,4 +34,10 @@
     {% endfor %}
 </tbody>
 </table>
+
+<hr/>
+
+<!-- 增加评论部分 -->
+{% comment_block request.path %}
+
 {% endblock %}

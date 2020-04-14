@@ -1,10 +1,9 @@
 '''
 @Author: Tye
 @Date: 2020-03-23 22:56:11
-@LastEditTime: 2020-03-26 14:13:20
+@LastEditTime: 2020-04-03 14:11:49
 @LastEditors: Please set LastEditors
 @Description: Comment Model
-@FilePath: \typeidea\typeidea\comment\models.py
 '''
 from django.db import models
 
@@ -20,7 +19,8 @@ class Comment(models.Model):
         (STATUS_DELETE, "删除"),
     )
 
-    target = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="评论目标")
+    # target = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="评论目标")    
+    target = models.CharField(max_length=100, verbose_name="评论目标")  # 修改target字段类型，让其更通用   
     content = models.CharField(max_length=2000, verbose_name="内容")
     nickname = models.CharField(max_length=50, verbose_name="昵称")
     website = models.URLField(verbose_name="网站")
@@ -33,6 +33,12 @@ class Comment(models.Model):
     def latest_comments(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
     
+
+    # 返回指定文章或友链下的所有有效评论
+    @classmethod
+    def get_by_target(cls, target):
+        return cls.objects.filter(target=target, status=cls.STATUS_NORMAL).order_by('-created_time')
+
 
     class Meta:
         verbose_name = verbose_name_plural = "评论"
